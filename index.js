@@ -1,5 +1,16 @@
+let supabaseUrl = "https://mdlpwgfroccebwneefgj.supabase.co/rest/v1/";
+let supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kbHB3Z2Zyb2NjZWJ3bmVlZmdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NDc3MTksImV4cCI6MjA5MjMyMzcxOX0.y0CHGSrJwG3bqW8tMFcoYB6iaUJk51dO7n4lubhTcGA"
 console.log("hola juego de cartas")
-let divCartas = ""
+let client = supabase.createClient(supabaseUrl, supabaseAnonKey);
+async function cargarCartas() {
+  // await = espera a tenir les dades abans de continuar; select("*") = agafa totes les columnes
+  let resultat = await client.from("cartas").select("*");
+  // resultat.data és l'array de notícies; si hi ha error, posem array buit
+  let arrayCartas = resultat.data || [];
+  // Passem l'array a la funció que genera l'HTML i el posa al div #llistaNoticies
+  renderitzarNoticies(noticies);
+}
+let divCartas = "" // creammos variable donde posteriormente pondremos el html que se repitira en el for
 const arrayCartas = [
   {
     id: 1,
@@ -25,3 +36,11 @@ const arrayCartas = [
 ]
 
 console.log(arrayCartas[0])
+for(let i = 0; i < arrayCartas.length; i++){
+    divCartas = divCartas + `<div class="carta w-[250px] h-[300px] border-1 rounded-2xl shadow-2xl">
+            <img class="w-full" src=${arrayCartas[i].imagen} alt="">
+        </div>`
+}
+
+console.log(divCartas)
+document.querySelector("#contenedor").innerHTML = divCartas
