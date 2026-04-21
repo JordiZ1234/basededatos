@@ -8,8 +8,9 @@ async function cargarCartas() {
   // resultat.data és l'array de notícies; si hi ha error, posem array buit
   let arrayCartas = resultat.data || [];
   // Passem l'array a la funció que genera l'HTML i el posa al div #llistaNoticies
-  renderitzarNoticies(noticies);
+  renderizarCartas(cartas);
 }
+
 let divCartas = "" // creammos variable donde posteriormente pondremos el html que se repitira en el for
 const arrayCartas = [
   {
@@ -36,11 +37,13 @@ const arrayCartas = [
 ]
 
 console.log(arrayCartas[0])
-for(let i = 0; i < arrayCartas.length; i++){
+
+function renderizarCartas(){
+    for(let i = 0; i < arrayCartas.length; i++){
     divCartas = divCartas + `<div class="carta w-[250px] h-[300px] border-1 rounded-2xl shadow-2xl">
             <img class="w-full" src=${arrayCartas[i].imagen} alt="">
         </div>`
 }
-
+}
 console.log(divCartas)
 document.querySelector("#contenedor").innerHTML = divCartas
